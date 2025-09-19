@@ -1,0 +1,94 @@
+# 🔌 Wiring Details for Driver Safety System
+
+This document outlines the complete hardware connections I used in the Arduino-based Driver Safety System. It includes pin mappings, power lines, and signal descriptions for each component.
+
+---
+
+##  Microcontroller: Arduino Uno
+
+| Arduino Pin | Connected Component       | Purpose / Signal Type                     |
+|-------------|---------------------------|-------------------------------------------|
+| `A0`        | MQ-3 Alcohol Sensor (AOUT) | Reads analog alcohol level                |
+| `D2`        | IR Eye Blink Sensor (OUT)  | Reads digital eye state (HIGH = closed)   |
+| `D7`        | LED (positive terminal)    | Visual alert when alcohol/drowsiness is detected |
+| `D8`        | Buzzer (positive terminal) | Audio alert when alcohol/drowsiness is detected |
+| `D9`        | Relay Module (IN)          | Controls engine lock (LOW = lock)         |
+| `5V`        | MQ-3 VCC, IR Sensor VCC, Relay VCC, LED (via resistor), Buzzer (via resistor) | Powers all components                     |
+| `GND`       | MQ-3 GND, IR Sensor GND, Relay GND, LED GND, Buzzer GND | Common ground for all components          |
+
+---
+
+##  MQ-3 Alcohol Sensor
+
+| MQ-3 Pin | Arduino Connection |
+|----------|--------------------|
+| `VCC`    | `5V`               |
+| `GND`    | `GND`              |
+| `AOUT`   | `A0`               |
+
+---
+
+## 👁 IR Eye Blink Sensor
+
+| IR Sensor Pin | Arduino Connection |
+|---------------|--------------------|
+| `VCC`         | `5V`               |
+| `GND`         | `GND`              |
+| `OUT`         | `D2`               |
+
+---
+
+##  Buzzer
+
+| Buzzer Pin | Arduino Connection |
+|------------|--------------------|
+| `+`        | `D8` (via 220Ω resistor recommended) |
+| `–`        | `GND`              |
+
+---
+
+##  LED
+
+| LED Pin | Arduino Connection |
+|---------|--------------------|
+| `+`     | `D7` (via 220Ω resistor recommended) |
+| `–`     | `GND`              |
+
+---
+
+##  Relay Module
+
+| Relay Pin | Arduino Connection |
+|-----------|--------------------|
+| `IN`      | `D9`               |
+| `VCC`     | `5V`               |
+| `GND`     | `GND`              |
+| `NO`      | Connected to motor positive terminal |
+| `COM`     | Connected to power source |
+| `NC`      | (Unused or used for normally closed logic) |
+
+> **Note:** The relay controls the motor (engine simulation). When triggered, it disconnects the motor to simulate engine lock.
+
+---
+
+## ⚙ DC Motor
+
+- Connected to the **relay output terminals**
+- Powered via **external 9V battery**
+- Relay acts as a switch to simulate engine cutoff
+
+---
+
+##  Power Supply
+
+- Arduino powered via **USB cable**
+- Components powered via **Arduino 5V and GND**
+- Motor powered via **9V battery** connected through relay
+
+---
+
+##  Breadboard Usage
+
+- Central hub for power distribution and signal routing
+- Clean jumper wire layout minimizes interference
+- All components properly grounded and powered
